@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticketer.WebApp", "Ticketer.WebApp\Ticketer.WebApp.csproj", "{46870812-46BD-479E-BC26-7DB344DD9F2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ticketer.Business", "Ticketer.Business\Ticketer.Business.csproj", "{DC0104CD-D6C7-4619-B113-BE0AF5493CD5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46870812-46BD-479E-BC26-7DB344DD9F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46870812-46BD-479E-BC26-7DB344DD9F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46870812-46BD-479E-BC26-7DB344DD9F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46870812-46BD-479E-BC26-7DB344DD9F2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC0104CD-D6C7-4619-B113-BE0AF5493CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC0104CD-D6C7-4619-B113-BE0AF5493CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC0104CD-D6C7-4619-B113-BE0AF5493CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC0104CD-D6C7-4619-B113-BE0AF5493CD5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
