@@ -12,7 +12,7 @@
 6) Docker
 
 # How to run this
-- Read the supporting story for this repository on medium at [here]()
+- Read the supporting story for this repository on medium at [here](https://codezen.medium.com/observability-with-asp-net-core-bcf6761dadf0)
 - Install Podman desktop from [here](https://podman-desktop.io)
 - Also install podman compose extension
 - Then run `podman compose up`
