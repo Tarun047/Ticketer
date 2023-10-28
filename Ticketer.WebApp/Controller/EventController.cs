@@ -15,7 +15,6 @@ public class EventController : ControllerBase
         this.eventService = eventService;
     }
 
-
     [HttpGet]
     public IAsyncEnumerable<Event> GetAllEvents()
     {
@@ -28,6 +27,15 @@ public class EventController : ControllerBase
         var result = await eventService.CreateEvent(eventCreationRequest);
         return result.Match<ActionResult<Event>>(
             evt => Created("", evt),
+            err => BadRequest(err.First()));
+    }
+
+    [HttpPut("{eventId:guid}/link-address")]
+    public async Task<ActionResult<EventAddress>> LinkAddress(Guid eventId, AddressLinkRequest addressLinkRequest)
+    {
+        var result = await eventService.LinkToAddress(eventId, addressLinkRequest);
+        return result.Match<ActionResult<EventAddress>>(
+            address => Created("", address),
             err => BadRequest(err.First()));
     }
 }

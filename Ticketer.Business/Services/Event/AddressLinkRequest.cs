@@ -1,6 +1,6 @@
-namespace Ticketer.Business.Models;
+namespace Ticketer.Business.Services;
 
-public class EventAddress : IModel, IEventLinked
+public class AddressLinkRequest
 {
     public string Address1 { get; set; }
     public string Address2 { get; set; }
@@ -8,6 +8,4 @@ public class EventAddress : IModel, IEventLinked
     public string State { get; set; }
     public string PostCode { get; set; }
     public string Country { get; set; }
-    public Guid EventId { get; set; }
-    public Guid Id { get; set; }
 }

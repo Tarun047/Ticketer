@@ -9,7 +9,12 @@ public class TicketerDbContext : DbContext
     {
     }
 
-    public void AuditEntities()
+    public virtual DbSet<Event> Events { get; set; }
+    public virtual DbSet<Ticket> Tickets { get; set; }
+    public virtual DbSet<EventAddress> EventAddresses { get; set; }
+    public virtual DbSet<Reservation> Reservations { get; set; }
+
+    void AuditEntities()
     {
         var auditableModels = ChangeTracker.Entries<IAuditableModel>();
         foreach (var auditableModelEntry in auditableModels)
@@ -33,8 +38,9 @@ public class TicketerDbContext : DbContext
         return base.SaveChanges();
     }
 
-    public virtual DbSet<Event> Events { get; set; }
-    public virtual DbSet<Ticket> Tickets { get; set; }
-    public virtual DbSet<EventAddress> EventAddresses { get; set; }
-    public virtual DbSet<Reservation> Reservations { get; set; }
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
+    {
+        AuditEntities();
+        return base.SaveChangesAsync(cancellationToken);
+    }
 }

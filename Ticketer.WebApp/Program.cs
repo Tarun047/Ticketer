@@ -5,6 +5,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using Ticketer.Business;
 using Ticketer.Business.Services;
+using Ticketer.Business.Services.Ticket;
 using Ticketer.Business.Validators;
 using Ticketer.WebApp.Extensions;
 
@@ -21,8 +22,11 @@ public class Program
         services.AddValidatorsFromAssemblyContaining<EventValidator>();
         services.AddFluentValidationAutoValidation();
 
+        Console.WriteLine(dbConfig);
         services.AddDbContext<TicketerDbContext>(options => options.UseNpgsql(dbConfig.ToString()));
         services.AddScoped<EventService>();
+        services.AddScoped<TicketService>();
+        services.AddScoped<ReservationService>();
         services.AddControllers();
 
         services.AddEndpointsApiExplorer();
@@ -33,8 +37,8 @@ public class Program
             .WithMetrics(metrics =>
                 metrics
                     .AddAspNetCoreInstrumentation()
-                    .AddMeter("Microsoft.AspNetCore.Hosting")
-                    .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
+                    .AddHttpClientInstrumentation()
+                    .AddRuntimeInstrumentation()
                     .AddPrometheusExporter()
             );
     }
@@ -47,7 +51,7 @@ public class Program
         var app = builder.Build();
         app.MapControllers();
 
-        if (app.Environment.IsDevelopment())
+        if (app.Environment.IsDevelopment() || app.Environment.IsDockerDevelopmentEnvironment())
         {
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -58,7 +62,7 @@ public class Program
             await app.EnsureDbMigrationsAsync<TicketerDbContext>();
         }
 
-        app.MapPrometheusScrapingEndpoint();
+        app.UseOpenTelemetryPrometheusScrapingEndpoint();
         await app.RunAsync();
     }
 }

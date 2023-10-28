@@ -1,0 +1,59 @@
+networks:
+  ticketer-network:
+    name: ticketer-network
+    driver: bridge
+
+services:
+  ticketer-web-app-service:
+    container_name: ticketer-web-app
+    build: .
+    restart: always
+    networks:
+      - ticketer-network
+    ports:
+      - 8080:5001
+    depends_on:
+      - ticketer-db-service
+  
+  ticketer-prometheus-service:
+    container_name: ticketer-prometheus
+    image: prom/prometheus:latest
+    networks:
+      - ticketer-network
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - ticketer-web-app-service
+  
+  
+  ticketer-grafana-service:
+    container_name: ticketer-grafana
+    image: grafana/grafana:latest
+    networks:
+      - ticketer-network
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana-provisioning:/etc/grafana/provisioning
+    depends_on: 
+      - ticketer-prometheus-service
+  
+  ticketer-db-service:
+    container_name: ticketer-db
+    image: postgres:latest
+    networks:
+      - ticketer-network
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: develop
+      POSTGRES_DB: Ticketer
+    volumes:
+      - ticketer-db-data:/var/lib/postgres
+
+volumes:
+  ticketer-db-data:
